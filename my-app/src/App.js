@@ -2,10 +2,10 @@ import React from 'react';
 import Header from './Components/Header/Header';
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
 import Quiz from './Pages/Quiz/Quiz';
 import Result from './Pages/Result/Result';
 import Home from './Pages/Home/Home';
+import Footer from './Components/Footer/Footer';
 
 const App = () => {
   return (
@@ -18,6 +18,7 @@ const App = () => {
           <Route path="/Result" element={<Result />} />
         </Routes>
       </div>
+      <Footer/>
     </BrowserRouter>
   );
 };
