@@ -1,49 +1,47 @@
-import React, { useState } from 'react';
-import './Home.css';
-import { Button, MenuItem, TextField } from '@mui/material';
-import Categories from '../../Data/Category/Category';
-import {  useNavigate } from 'react-router-dom';
-import ErrorMessage from '../../Components/Message/ErrorMeesage';
+import { Button, MenuItem, TextField } from "@mui/material";
+import { useState } from "react";
+import { useNavigate} from "react-router";
+import ErrorMessage from "../../Components/Message/ErrorMeesage";
+import Categories from "../../Data/Category/Category";
+import "./Home.css";
 
+const Home = ({ name, setName, fetchQuestions }) => {
+  const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+  const [error, setError] = useState(false);
 
-const Home = ({ name, setname, fetchQuestions }) => {
-  const [category, setcategory] = useState('');
-  const [Difficulty, setDifficulty] = useState('0');
-  const [error, seterror] = useState(false);
   const history = useNavigate();
 
   const handleSubmit = () => {
-    if (!name || !category || !Difficulty) {
-      seterror(true);
+    if (!category || !difficulty || !name) {
+      setError(true);
       return;
     } else {
-      seterror(false);
-      fetchQuestions(category, Difficulty);
-      history('/Quiz');
+      setError(false);
+      fetchQuestions(category, difficulty);
+      history("/quiz");
     }
   };
 
   return (
-    <div className='Content'>
-      <div className='settings'>
+    <div className="content">
+      <div className="settings">
         <span style={{ fontSize: 30 }}>Quiz Settings</span>
-        <div className='Settings_select'>
-          {/* Add content here or remove this div if not needed */}
-          {error && <ErrorMessage>Please Fill all the Details</ErrorMessage>}
+        <div className="settings__select">
+          {error && <ErrorMessage >Please Fill all the feilds</ErrorMessage>}
           <TextField
-            label="Enter Your name"
+            style={{ marginBottom: 25 }}
+            label="Enter Your Name"
             variant="outlined"
-            value={name}
-            onChange={(e) => setname(e.target.value)}
-            style={{ marginBottom: "30px" }}
+            onChange={(e) => setName(e.target.value)}
           />
           <TextField
             select
             label="Select Category"
-            variant="outlined"
             value={category}
-            onChange={(e) => setcategory(e.target.value)}
-            style={{ marginBottom: "30px" }}
+            onChange={(e) => setCategory(e.target.value)}
+            variant="outlined"
+            style={{ marginBottom: 30 }}
           >
             {Categories.map((cat) => (
               <MenuItem key={cat.category} value={cat.value}>
@@ -54,14 +52,20 @@ const Home = ({ name, setname, fetchQuestions }) => {
           <TextField
             select
             label="Select Difficulty"
-            variant='outlined'
-            value={Difficulty}
+            value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
-            style={{ marginBottom: "30px" }}
+            variant="outlined"
+            style={{ marginBottom: 30 }}
           >
-            <MenuItem key="easy" value="easy">easy</MenuItem>
-            <MenuItem key="medium" value="medium">medium</MenuItem>
-            <MenuItem key="Hard" value="Hard">Hard</MenuItem>
+            <MenuItem key="Easy" value="easy">
+              Easy
+            </MenuItem>
+            <MenuItem key="Medium" value="medium">
+              Medium
+            </MenuItem>
+            <MenuItem key="Hard" value="hard">
+              Hard
+            </MenuItem>
           </TextField>
           <Button
             variant="contained"
@@ -73,7 +77,7 @@ const Home = ({ name, setname, fetchQuestions }) => {
           </Button>
         </div>
       </div>
-      <img src="/quiz.svg" className="banner" alt="quiz.svg" />
+      <img src="/quiz.svg" className="banner" alt="quiz app" />
     </div>
   );
 };

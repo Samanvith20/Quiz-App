@@ -1,17 +1,17 @@
-import React, { useState, } from 'react';
-import Header from './Components/Header/Header';
-import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Quiz from './Pages/Quiz/Quiz';
-import Result from './Pages/Result/Result';
-import Home from './Pages/Home/Home';
-import Footer from './Components/Footer/Footer';
-import axios from "axios"
+import axios from "axios";
+import { useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header";
+import Home from "./Pages/Home/Home";
+import Quiz from "./Pages/Quiz/Quiz";
+import Result from "./Pages/Result/Result";
 
-const App = () => {
-  const [name, setname] = useState('');
-  const [Questions, setQuestions] = useState([]);
-  const [score, setscore] = useState('0');
+function App() {
+  const [questions, setQuestions] = useState();
+  const [name, setName] = useState();
+  const [score, setScore] = useState(0);
 
   const fetchQuestions = async (category = "", difficulty = "") => {
     const { data } = await axios.get(
@@ -25,17 +25,18 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <div className="app" style={{ backgroundImage: `url("/quiz.png")` }}>
+       <div className="app" style={{ backgroundImage: 'url("/quiz.png")' }}>
+      
         <Header />
         <Routes>
-          <Route path="/" element={<Home name={name} setname={setname} fetchQuestions={fetchQuestions} />} />
-          <Route path="/Quiz" element={<Quiz name={name} Questions={Questions} setQuestions={setQuestions} score={score} setscore={setscore} />} />
-          <Route path="/Result" element={<Result />} />
+          <Route path="/" element={<Home name={name} setName={setName} fetchQuestions={fetchQuestions} />} />
+          <Route path="/quiz" element={<Quiz name={name} questions={questions} score={score} setScore={setScore} setQuestions={setQuestions} />} />
+          <Route path="/result" element={<Result name={name} score={score} />} />
         </Routes>
       </div>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   );
-};
- 
+}
+
 export default App;
